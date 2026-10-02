@@ -1,0 +1,7 @@
+# Tested with Python 3.12 and the versions below (Python >= 3.9 required).
+torch>=2.0        # tested: 2.4.1
+numpy>=1.24,<2    # tested: 1.26.4
+pandas>=2.0       # tested: 2.3.3
+pyarrow>=14       # tested: 16.1.0 (parquet reader for pandas)
+scikit-learn>=1.3 # tested: 1.6.1
+matplotlib>=3.7   # tested: 3.8.4

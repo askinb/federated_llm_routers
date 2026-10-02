@@ -1,44 +1,69 @@
-# Federated LLM Router Code
+# Federate the Router: Learning Language Model Routers with Sparse and Decentralized Evaluations
 
-This repository contains the implementation code for [Federate the Router: Learning LM Routers with Sparse and Decentralized Evaluations](https://arxiv.org/abs/2601.22318).
+**Baris Askin\*, Shivam Patel\*, Anupam Nayak\*, Andrea Vigano, Jiin Woo, Gauri Joshi, Carlee Joe-Wong**
+<br>NeurIPS 2026 · [Paper Link](https://arxiv.org/abs/2601.22318)
+<br><sub>\*Equal contribution</sub>
 
+## Abstract
 
-## Requirements
+Large language models (LLMs) are increasingly accessed as remotely hosted services by edge and enterprise
+clients that cannot run frontier models locally. Since models vary widely in capability and price, routing
+queries to models that balance quality and inference cost is essential. Existing router approaches assume
+access to centralized query–model evaluation data. However, these data are often fragmented across clients,
+such as end users and organizations, and are privacy-sensitive, which makes centralizing data infeasible.
+Additionally, per-client router training is ineffective since local evaluation data is limited and covers
+only a restricted query distribution and a biased subset of model evaluations. We introduce the first
+federated framework for LLM routing, enabling clients to learn a shared routing policy from local offline
+query–model evaluation data. Our framework supports both parametric multilayer perceptron router and
+nonparametric K-means router under heterogeneous client query distributions and non-uniform model coverage.
+Across three benchmarks, federated collaboration improves the accuracy–cost frontier over client-local
+routers, both via increased effective model coverage and better query generalization. Our theoretical
+results also validate that federated training reduces routing suboptimality.
 
-- Python
-- PyTorch
-- NumPy
-- Pandas
-- Matplotlib
-- scikit-learn
+## Repository structure
 
-## Dataset
+```
+├── data/              datasets (RouterBench, ProxRouter, SPROUT) with query embeddings
+├── routerbench/       RouterBench experiments
+├── proxrouter/        ProxRouter experiments
+├── sprout/            SPROUT experiments
+└── plot_embedllm.py   EmbedLLM comparison figures
+```
 
-The experiments require the dataset file `routerbench_0shot_w4emb.parquet`, and `proxrouter_train.parquet`. 
+Each dataset folder contains:
 
-**Download the dataset from this link:** https://drive.google.com/drive/folders/1zNW5z5Hau-j0JfFFvGC5uZudtBxXvwBV?usp=share_link
+- `fl_mlp_router.py`, `fl_kmeans_router.py`: federated vs. client-local and centralized routers
+- `*_model_expansion.py`: new models join the pool
+- `*_new_clients.py`: new clients join the system
+- `*_high_het.py`: high heterogeneity and adaptive personalization
+- `fl_mf_router.py`: federated EmbedLLM baseline
+- `plot_router_results.py`: paper figures from the saved results
 
-Place the `.parquet` file in the same directory as the Python scripts.
+`sprout/` contains the main experiments (`fl_mlp_router.py`, `fl_kmeans_router.py`) and plotting.
 
 ## Usage
 
-All files can be run with the following command:
-
 ```bash
-python {file_name}.py
+pip install -r requirements.txt
+
+python routerbench/fl_mlp_router.py          # run an experiment
+python routerbench/plot_router_results.py    # plot its results
 ```
 
-## Files Description
+The datasets are included in `data/` and prepared automatically on the first run (see
+[`data/README.md`](data/README.md)).
 
-- `fl_kmeans_router*.py` - K-means based federated router implementations
-- `fl_mlp_router*.py` - MLP-based federated router implementations
-- `*_high_het.py` - High heterogeneity & personalization experiments
-- `*_model_expansion.py` - Model expansion experiments  
-- `*_new_clients.py` - New client joining experiments
-- `proxrouter_experiments/` - Additional experimental variants with proxrouter dataset
+## Citation
 
-## Output
+```bibtex
+@inproceedings{askin2026federate,
+  title     = {Federate the Router: Learning Language Model Routers with Sparse and Decentralized Evaluations},
+  author    = {Askin, Baris and Patel, Shivam and Nayak, Anupam and Vigano, Andrea and Woo, Jiin and Joshi, Gauri and Joe-Wong, Carlee},
+  booktitle = {The Fortieth Annual Conference on Neural Information Processing Systems},
+  year      = {2026}
+}
+```
 
-Each script will create its own output directory with results and visualizations.
+## Contact
 
-For questions/comments, please send an email to [Baris Askin](https://askinb.github.io).
+Please reach out to [Baris Askin](https://askinb.github.io) for questions and correspondence.

@@ -1,0 +1,13 @@
+# Datasets rebuilt from data/chunks/ on first use (never commit these; the chunks are the source of truth)
+data/*.parquet
+data/*.tmp
+
+# Experiment outputs and generated figures
+*_out/
+*_out_high_het/
+paper_results/
+
+__pycache__/
+*.pyc
+.DS_Store
+.ipynb_checkpoints/
